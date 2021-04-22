@@ -54,10 +54,68 @@ La memorización no funciona, es decir, la lista está limpia de nuevo. Después
 **Preguntas**
 
 * ¿Qué es un Azure Function?
+
+```
+ Permite desarrollar con más eficacia una plataforma informática sin servidor basada en eventos, permite compilar y depurar a nivel local sin configuracines edicionales.
+
+```
+
 * ¿Qué es serverless?
+
+```
+Se refiere al modelo de computación en el que el proveedor permite ejecutar durante un periodo de tiempo, porciones de código denominadas funciones sin necesidad de hacernos cargo de su infraestructura. Se encarga de escalar y liberar recursos automaticamente cuando sea necesario.
+```
+
 * ¿Qué es el runtime y que implica seleccionarlo al momento de crear el Function App?
+
+```
+Se relaciona principalmente con la version de .NET en la que se basa su tiempo de ejecución. Al seleccionar el plan Consumption y la versión de runtime 2, implica que  su "timeout duration" es de 5 minutos.
+```
+
 * ¿Por qué es necesario crear un Storage Account de la mano de un Function App?
+
+```
+Porque proporciona un espacio de nombres único para los datos de Azure Storage que es accesible a través de HTTP.
+```
+
 * ¿Cuáles son los tipos de planes para un Function App?, ¿En qué se diferencias?, mencione ventajas y desventajas de cada uno de ellos.
+
+```
+Existen 3 tipos de planes: Consumption, Premium y App Service. Sus características, ventajas y desventajas de pueden ver en la siguiente imagen:
+```
+![](images/planes.jpg)
+
 * ¿Por qué la memoization falla o no funciona de forma correcta?
+
+```
+Después de los 5 minutos, functionTimeout llega al límite de espera y la siguiente petición que se haga es como si fuera la primera, es decir, la estructura de memorización usada anteriormente queda vacía.
+```
+
 * ¿Cómo funciona el sistema de facturación de las Function App?
+
+```
+Se factura en función del consumo de recursos y las ejecuciones por segundo así:
+```
+
+![](images/facturacion.jpg)
+
 * Informe
+
+```
+Prueba de carga sin memorización:
+```
+
+![](images/prueba.jpg)
+
+```
+Gracias a los resultados de tiempo de cada una de las peticiones, se observa que sin memorización los tiempos de cada una de ellas es similar, no se utilizan resultados anteriores sino que se hace desde el inicio. Las consultas previas no se almacenan en un estructura de datos, en donde su búsqueda representaría un tiempo lineal.
+
+Para la prueba de carga con memorización se observa un tiempo de 2m y 15s para la primera consulta, y un tiempo mucho menor de 160ms para las siguientes 9, ya que se hace uso de la estructura de datos destinada para memorizar que hace que dichas 9 consultas sean lineales:
+```
+
+![](images/prueba2.jpg)
+
+![](images/prueba3.jpg)
+
+
+
